@@ -25,7 +25,7 @@ function App() {
 }
 
 console.log("We here rn");
-const ws = new WebSocket('ws://localhost:3001');
+const ws = new WebSocket('ws://friendly-feud.onrender.com');
 ws.onopen = () => {
   console.log('Connected to server');
 }
