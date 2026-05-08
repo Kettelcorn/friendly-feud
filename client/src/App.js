@@ -24,8 +24,10 @@ function App() {
   );
 }
 
+connectDisocrd();
+
 console.log("We here rn");
-const ws = new WebSocket('ws://friendly-feud.onrender.com');
+const ws = new WebSocket(`wss://${disocrdSdk.instanceId}.discordsays.com/.proxy/api`);
 ws.onopen = () => {
   console.log('Connected to server');
 }
@@ -39,7 +41,14 @@ async function connectDisocrd() {
 
 async function setupDiscordSdk() {
   let auth;
-  const discordSdk = new DiscordSDK(process.env.REACT_APP_DISCORD_CLIENT_ID);
+  const discordSdk = new DiscordSDK(process.env.REACT_APP_DISCORD_CLIENT_ID, {
+    urlMappings: [
+      {
+      prefix: "/api",
+      target: "https://friendly-feud.onrender.com",
+      },
+    ],
+  });
   await discordSdk.ready();
   console.log("Discord SDK is ready");
 
@@ -77,8 +86,6 @@ async function setupDiscordSdk() {
     throw new Error("Authenticate command failed");
   }
 }
-
-connectDisocrd();
 //cloudflared tunnel --url http://localhost:3000
 
 
