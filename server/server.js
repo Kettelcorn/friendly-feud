@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import fetch from "node-fetch";
+import { createServer } from 'http';
+import { WebSocketServer, WebSocket } from 'ws';
 dotenv.config({ path: "../.env" });
 
 const app = express();
@@ -8,6 +10,21 @@ const port = 3001;
 
 // Allow express to parse JSON bodies
 app.use(express.json());
+
+const server = createServer(app);
+const wss = new WebSocketServer({ server })
+
+wss.on('connection', (ws, req) => {
+  console.log(`New client connected from ${req.socket.remoteAddress}`);
+  ws.send('Welcome to the Websocket server!');
+  ws.on('message', (message) => {
+    console.log(`Received: ${message}`);
+    ws.send(`Server received: ${message}`);
+  });
+  ws.on('close', () => {
+    console.log('Clinet disconnected');
+  });
+});
 
 app.post("/api/token", async (req, res) => {
 
@@ -32,6 +49,12 @@ app.post("/api/token", async (req, res) => {
   res.send({access_token});
 });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+app.get('/', (req, res) => {
+  res.send({
+    message: 'Why hello there!'
+  });
+});
+
+server.listen(port, () => {
+  console.log(`Server listening on :${port}`);
 });

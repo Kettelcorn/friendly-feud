@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
-import { DiscordSDK } from "@discord/embedded-app-sdk";
+//import { DiscordSDK } from "@discord/embedded-app-sdk";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Fuck my stupid chungus life bro
+          My example react page
         </p>
         <a
           className="App-link"
@@ -24,8 +24,14 @@ function App() {
   );
 }
 
-let auth;
-const discordSdk = new DiscordSDK(process.env.REACT_APP_DISCORD_CLIENT_ID);
+console.log("We here rn");
+const ws = new WebSocket('ws://localhost:3001');
+ws.onopen = () => {
+  console.log('Connected to server');
+}
+
+//let auth;
+/**const discordSdk = new DiscordSDK(process.env.REACT_APP_DISCORD_CLIENT_ID);
 
 setupDiscordSdk().then(() => {
   console.log("Discord SDK is authenticated");
@@ -72,6 +78,9 @@ async function setupDiscordSdk() {
     throw new Error("Authenticate command failed");
   }
 }
+  **/
+
+//cloudflared tunnel --url http://localhost:3000
 
 
 export default App;
