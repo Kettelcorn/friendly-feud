@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
-//import { DiscordSDK } from "@discord/embedded-app-sdk";
+import { DiscordSDK } from "@discord/embedded-app-sdk";
 
 function App() {
   return (
@@ -30,17 +30,16 @@ ws.onopen = () => {
   console.log('Connected to server');
 }
 
-//let auth;
-/**const discordSdk = new DiscordSDK(process.env.REACT_APP_DISCORD_CLIENT_ID);
-
-setupDiscordSdk().then(() => {
-  console.log("Discord SDK is authenticated");
-
-  // We can now make API calls within the scopes we requested in setupDiscordSDK()
-  // Note: the access_token returned is a sensitive secret and should be treated as such
+async function connectDisocrd() {
+  setupDiscordSdk().then(() => {
+    console.log("Discord SDK is authenticated");
 });
+}
+
 
 async function setupDiscordSdk() {
+  let auth;
+  const discordSdk = new DiscordSDK(process.env.REACT_APP_DISCORD_CLIENT_ID);
   await discordSdk.ready();
   console.log("Discord SDK is ready");
 
@@ -78,8 +77,8 @@ async function setupDiscordSdk() {
     throw new Error("Authenticate command failed");
   }
 }
-  **/
 
+connectDisocrd();
 //cloudflared tunnel --url http://localhost:3000
 
 
